@@ -1,0 +1,12 @@
+/* ============================================================
+   10. PROCESS
+============================================================ */
+.process{padding:7.5rem 0;background:var(--paper);}
+.process-head{max-width:34ch;margin-bottom:3.6rem;}
+.process-head h2{font-size:clamp(1.9rem,3.6vw,2.8rem);margin-bottom:1rem;}
+.process-head p{color:var(--ink-soft);}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem;}
+.process-step{padding-top:1.8rem;border-top:1px solid var(--line);position:relative;}
+.process-step .num{font-family:var(--font-mono);font-size:.78rem;color:var(--blue);letter-spacing:.05em;display:block;margin-bottom:1rem;}
+.process-step h3{font-size:1.3rem;margin-bottom:.7rem;}
+.process-step p{color:var(--ink-soft);font-size:.94rem;}

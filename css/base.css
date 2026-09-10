@@ -1,0 +1,469 @@
+/* ============================================================
+   2. BASE
+============================================================ */
+body{
+  background:var(--porcelain);
+  background-image:radial-gradient(circle at 7% 18%, rgba(38,83,199,.055), transparent 22rem),radial-gradient(circle at 94% 72%, rgba(232,162,39,.07), transparent 25rem);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  transition:background .5s var(--ease), color .5s var(--ease);
+  overflow-x:hidden;
+}
+::selection{background:var(--blue);color:#fff;}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth;}
+}
+section{scroll-margin-top:var(--header-h);}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:32px;}
+
+/* Image protection & anti-save system */
+img, video, canvas, .card-media, .logo-card, .lb-media, .compare-slider, .hero-slide, .hero-slide-bg, .as-stage-img, .as-modal-img, .as-blueprint-img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;letter-spacing:-.01em;}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  display:inline-flex;align-items:center;gap:.6em;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;display:inline-block;}
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;
+  padding:.95em 1.7em;
+  border-radius:999px;
+  font-family:var(--font-mono);
+  font-size:.8rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:transform .35s var(--ease), background .3s ease, color .3s ease, box-shadow .3s ease;
+  white-space:nowrap;
+}
+.btn-solid{background:var(--ink);color:var(--porcelain);}
+.btn-solid:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.btn-ghost{border:1px solid var(--line);color:var(--ink);}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px);}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
+.skip-link{position:fixed;top:12px;left:12px;z-index:1000;padding:.7em 1em;border-radius:999px;background:var(--ink);color:var(--porcelain);font-family:var(--font-mono);font-size:.76rem;transform:translateY(-180%);transition:transform .2s ease;}
+.skip-link:focus{transform:none;}
+
+/* reveal-on-scroll */
+[data-reveal]{opacity:0;transform:translate3d(0,calc(28px + var(--scroll-shift, 0px)),0);transition:opacity .8s var(--ease), transform .8s var(--ease);}
+[data-reveal].is-visible{opacity:1;transform:translate3d(0,var(--scroll-shift, 0px),0);}
+[data-reveal="fade"]{transform:translate3d(0,var(--scroll-shift, 0px),0);}
+[data-reveal] .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease) .1s;}
+[data-reveal].is-visible .eyebrow::before{transform:scaleX(1);}
+[data-reveal][style*="--reveal-delay"]{transition-delay:var(--reveal-delay);}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none;}
+}
+
+/* blueprint line-draw symbol, reused via <use> */
+.blueprint-svg{width:100%;height:100%;overflow:visible;}
+.blueprint-svg path,.blueprint-svg line,.blueprint-svg circle{
+  fill:none;stroke:currentColor;stroke-width:1.4;
+  stroke-dasharray:600;stroke-dashoffset:600;
+}
+.blueprint-svg.draw-in path,.blueprint-svg.draw-in line,.blueprint-svg.draw-in circle{
+  animation:draw 2.2s var(--ease) forwards;
+}
+.blueprint-svg.draw-in path:nth-child(2){animation-delay:.15s;}
+.blueprint-svg.draw-in path:nth-child(3){animation-delay:.3s;}
+.blueprint-svg.draw-in line{animation-delay:.45s;}
+.blueprint-svg.draw-in circle{animation-delay:.6s;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+@media (prefers-reduced-motion:reduce){
+  .blueprint-svg path,.blueprint-svg line,.blueprint-svg circle{stroke-dashoffset:0;animation:none;}
+}
+
+/* Hide browser scrollbar / slidebar while keeping smooth scrolling */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* ============================================================
+   3. SCROLL PROGRESS (HIDDEN)
+============================================================ */
+.progress-track{display:none!important;}
+
+/* ============================================================
+   13. RESPONSIVE
+============================================================ */
+@media (max-width:980px){
+  .statement-grid,.studio-grid,.contact-grid{grid-template-columns:1fr;gap:2.6rem;}
+  .studio-image{aspect-ratio:16/9;}
+  .project-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .process-grid{grid-template-columns:1fr;gap:2rem;}
+  .lightbox-inner{grid-template-columns:1fr;}
+  .lb-media{min-height:280px;}
+}
+@media (max-width:720px){
+  .nav-links,.scroll-cue{display:none;}
+  .menu-toggle{display:flex;}
+  .hero-caption{display:none;}
+  .project-grid, .logo-grid{grid-template-columns:1fr;}
+  .capability-list{grid-template-columns:1fr;}
+  .two-col{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;gap:2rem;}
+  nav.primary-nav{position:fixed;top:var(--header-h);left:0;right:0;background:var(--porcelain);
+    flex-direction:column;align-items:flex-start;gap:1.5rem;padding:2rem 32px;
+    transform:translateY(-8px);opacity:0;visibility:hidden;transition:all .3s ease;box-shadow:var(--shadow-sm);}
+  nav.primary-nav.is-open{transform:none;opacity:1;visibility:visible;}
+  .nav-links{display:flex;flex-direction:column;gap:1.1rem;}
+}
+
+/* ============================================================
+   14. MOTION SYSTEM
+============================================================ */
+.hero-caption.is-updating{animation:caption-rise .42s var(--ease) both;}
+.process-step::before{content:"";position:absolute;top:-1px;left:0;width:100%;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .75s var(--ease);}
+.process-step.is-visible::before{transform:scaleX(1);}
+.capability{transition:transform .35s var(--ease);}
+.capability:hover{transform:translateX(5px);}
+.stat-number{font-variant-numeric:tabular-nums;}
+.btn{position:relative;overflow:hidden;isolation:isolate;}
+.btn > *{position:relative;z-index:1;}
+.btn::after{content:"";position:absolute;top:-35%;bottom:-35%;left:-35%;width:22%;z-index:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent);transform:translateX(-310%) skewX(-24deg);transition:transform .72s var(--ease);}
+.btn:hover::after{transform:translateX(850%) skewX(-24deg);}
+.compare-arrow:hover{transform:translateY(-2px);}
+.compare-handle-knob{animation:compare-breathe 2.8s ease-in-out infinite;}
+.compare-slider:hover .compare-handle-knob,.compare-slider:focus-within .compare-handle-knob{animation:none;}
+@keyframes hero-scale{from{transform:translate3d(0,var(--hero-shift,0px),0) scale(1.09);}to{transform:translate3d(0,var(--hero-shift,0px),0) scale(1);}}
+@keyframes hero-rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+@keyframes caption-rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@keyframes cue-float{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+@keyframes dot-progress{from{transform:translateX(-105%);}to{transform:translateX(0);}}
+@keyframes confirmation-in{from{opacity:0;transform:translateY(14px) scale(.98);}to{opacity:1;transform:none;}}
+@keyframes hero-sheen{from{background-position:0 0,0 0;}to{background-position:42px 42px,0 0;}}
+@keyframes blueprint-drift{0%,100%{transform:translate3d(0,0,0) rotate(-1deg);}50%{transform:translate3d(-10px,12px,0) rotate(1deg);}}
+@keyframes compare-breathe{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.08);}}
+@media (prefers-reduced-motion:reduce){
+  .hero-blueprint,.hero::after,.compare-handle-knob{animation:none;}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;}
+}
+
+/* ============================================================
+   ENHANCED ANIMATIONS & EFFECTS
+============================================================ */
+
+/* 1. Floating Effect for Hero Blueprint */
+.hero-blueprint {
+  animation: blueprint-drift 11s ease-in-out infinite, float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* 2. Enhanced Scroll Reveal (Adds a smooth blur and scale-in effect) */
+[data-reveal] {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translate3d(0, 40px, 0) scale(0.98);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease), filter 0.8s var(--ease);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* 3. Dynamic Button Hover (Glow effect and slight scale) */
+.btn-solid {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.btn-solid:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 25px -10px rgba(38, 83, 199, 0.4);
+}
+
+/* 4. Deepened Glassmorphism for Header */
+header.is-scrolled {
+  background: rgba(247, 244, 238, 0.65);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+}
+
+/* 5. Image Zoom on Project Cards */
+.card-media {
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+}
+.project-card:hover .card-media {
+  transform: scale(1.08);
+  filter: saturate(1.1);
+}
+
+/* 6. Pulse effect for the Compare Slider Knob */
+.compare-handle-knob {
+  animation: compare-breathe 2.8s infinite alternate ease-in-out;
+}
+@keyframes compare-breathe {
+  0% { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.65), 0 0 0 0 rgba(255, 255, 255, 0.6); transform: translate(-50%, -50%) scale(1); }
+  100% { box-shadow: 0 6px 24px rgba(0, 0, 0, 0.75), 0 0 0 10px rgba(255, 255, 255, 0); transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* ============================================================
+   15. TOAST NOTIFICATIONS, CONSULTATION BOOKING & VALIDATION
+============================================================ */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+  max-width: 380px;
+  width: calc(100vw - 48px);
+}
+.toast {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 16px 20px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.4s var(--ease), opacity 0.4s ease;
+}
+[data-theme="dark"] .toast {
+  background: rgba(24, 28, 34, 0.95);
+  backdrop-filter: blur(16px);
+  border-color: rgba(255,255,255,0.15);
+  color: #F7F4EE;
+}
+.toast.is-visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+.toast-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.toast-success .toast-icon { background: rgba(46, 125, 50, 0.15); color: #2e7d32; }
+.toast-error .toast-icon { background: rgba(211, 47, 47, 0.15); color: #d32f2f; }
+.toast-info .toast-icon { background: rgba(25, 118, 210, 0.15); color: #1976d2; }
+.toast-body h5 { font-family: var(--font-body); font-size: 0.94rem; font-weight: 700; margin-bottom: 2px; }
+.toast-body p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.35; }
+[data-theme="dark"] .toast-body p { color: rgba(247,244,238,0.7); }
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--amber);
+  width: 100%;
+  transform-origin: left;
+}
+
+.contact-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.8rem;
+  background: rgba(20,23,27,0.06);
+  padding: 4px;
+  border-radius: 999px;
+  width: fit-content;
+}
+[data-theme="dark"] .contact-tabs {
+  background: rgba(247,244,238,0.08);
+}
+.contact-tab {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.contact-tab.is-active {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-weight: 700;
+}
+.booking-wrap {
+  display: none;
+}
+.booking-wrap.is-active {
+  display: block;
+}
+.contact-form-wrap.is-hidden {
+  display: none;
+}
+.date-slots, .time-slots, .mode-slots {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.slot-btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.slot-btn:hover {
+  border-color: var(--amber);
+  transform: translateY(-1px);
+}
+.slot-btn.is-selected {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.field { position: relative; }
+.field-error-msg {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #d32f2f;
+  margin-top: 4px;
+  display: none;
+}
+.field.is-invalid input, .field.is-invalid textarea, .field.is-invalid select {
+  border-color: #d32f2f !important;
+}
+.field.is-invalid .field-error-msg {
+  display: block;
+}
+.field.is-valid input, .field.is-valid textarea {
+  border-color: #2e7d32 !important;
+}
+
+
+
+
+
+/* FULLSCREEN & STEP BUTTON STYLES */
+.compare-steps {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.compare-step-btn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.compare-step-btn:hover {
+  border-color: var(--blue);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.compare-step-btn.is-active {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(38,83,199,0.3);
+}
+
+
+
+/* KINETIC TYPOGRAPHY / TEXT SPLIT */
+.reveal-text .word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  margin-right: 0.25em;
+}
+.reveal-text .word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease;
+}
+.reveal-text.is-visible .word,
+.is-visible .reveal-text .word {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* AUTO-SWEEP COMPARE SLIDER */
+.compare-slider.auto-sweep-active .compare-before,
+.compare-slider.auto-sweep-active .compare-handle {
+  transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============ MAGNETIC BUTTON HOVER ============ */
+.btn, .hero-arrow, .slot-btn, .compare-arrow, .compare-step-btn {
+  transition: transform .35s var(--ease), background .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.btn.magnetic-active {
+  transition: transform .12s ease-out, background .3s ease, color .3s ease, box-shadow .3s ease;
+}
+
+/* ============ VIEW TRANSITIONS ============ */
+@view-transition { navigation: auto; }
+::view-transition-old(root) {
+  animation: vt-fade-out 0.3s ease-in both;
+}
+::view-transition-new(root) {
+  animation: vt-fade-in 0.4s ease-out 0.1s both;
+}
+@keyframes vt-fade-out { to { opacity: 0; transform: scale(0.98); } }
+@keyframes vt-fade-in { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: scale(1); } }
+
+/* Section-level transition markers */
+.statement, .gallery, .logos, .compare-section, .pano-viewer-section, .studio, .process, .contact, footer {
+  view-transition-name: section-content;
+}

@@ -1,0 +1,31 @@
+/* ============================================================
+   6. STATEMENT
+============================================================ */
+.statement{padding:8.5rem 0 6rem;}
+.statement blockquote{
+  font-family:var(--font-display);font-style:italic;font-weight:400;
+  font-size:clamp(1.6rem, 3.4vw, 2.6rem);
+  line-height:1.35;max-width:20ch;
+  margin:1.6rem 0 1rem;
+}
+.statement cite{font-style:normal;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.06em;color:var(--ink-soft);}
+.statement-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:end;}
+.statement-copy p{max-width:42ch;color:var(--ink-soft);margin-top:1rem;}
+.stat-row{display:flex;gap:2.6rem;flex-wrap:wrap;}
+.stat b{display:block;font-family:var(--font-display);font-size:2.3rem;font-weight:500;}
+.stat span{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+
+/* ============================================================
+   7. STUDIO / ABOUT
+============================================================ */
+.studio{padding:6rem 0;background:var(--paper);transition:background .5s var(--ease);}
+.studio-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:5rem;align-items:center;}
+.studio-image{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:4/5;border-radius:var(--radius-m);background-size:cover;background-position:center;box-shadow:var(--shadow-lg);will-change:transform;}
+.studio-image::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border:1px solid rgba(255,255,255,.35);border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(20,23,27,.07);}
+.studio-text h2{font-size:clamp(1.9rem,3.4vw,2.6rem);margin-bottom:1.3rem;max-width:14ch;}
+.studio-text > p{color:var(--ink-soft);max-width:52ch;margin-bottom:2.2rem;}
+.capability-list{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem 2rem;}
+.capability{display:flex;gap:.9rem;}
+.cap-dot{width:11px;height:11px;border-radius:3px;margin-top:.4em;flex-shrink:0;}
+.capability h4{font-family:var(--font-body);font-size:.98rem;font-weight:700;margin-bottom:.25em;}
+.capability p{font-size:.88rem;color:var(--ink-soft);}

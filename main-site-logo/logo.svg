@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" width="420" height="120" aria-label="Sthhapatya Architects &amp; Associates Logo">
+  <defs>
+    <style>
+      .logo-navy { fill: #0C455F; transition: fill 0.4s ease; }
+      .logo-amber { fill: #E8A227; transition: fill 0.4s ease; }
+      .logo-text-bold { font-family: 'Manrope', 'Helvetica Neue', sans-serif; font-weight: 800; font-size: 38px; fill: #0C455F; transition: fill 0.4s ease; letter-spacing: -0.5px; }
+      .logo-text-sub { font-family: 'Manrope', 'Helvetica Neue', sans-serif; font-weight: 500; font-size: 19px; fill: #0C455F; transition: fill 0.4s ease; letter-spacing: 0.5px; }
+      
+      :root[data-theme="dark"] .logo-navy,
+      :root[data-theme="dark"] .logo-text-bold,
+      :root[data-theme="dark"] .logo-text-sub { fill: #FFFFFF; }
+      :root[data-theme="dark"] .logo-amber { fill: #F2B546; }
+    </style>
+  </defs>
+  <g transform="translate(0, 0)">
+    <!-- Upper Navy/White Polygon -->
+    <path class="logo-navy" d="M 85 10 L 260 10 L 210 80 L 235 80 L 200 115 L 180 90 L 215 40 L 125 40 Z"/>
+    <path class="logo-navy" d="M 95 18 L 245 18 L 210 40 Z" opacity="0.15"/>
+    <!-- Lower Amber Polygon -->
+    <path class="logo-amber" d="M 60 25 L 80 48 L 50 82 L 185 82 L 140 115 L 15 115 Z"/>
+    <!-- Accent Line -->
+    <polygon class="logo-amber" points="68,12 185,82 170,82 53,12"/>
+  </g>
+</svg>

@@ -1,0 +1,619 @@
+/* ============ 360° CONNECTED VIRTUAL TOUR SECTION ============ */
+.pano-viewer-section {
+  padding: 7rem 0 6rem;
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.pano-viewer-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 25% 20%, rgba(38,83,199,0.06), transparent 50%),
+              radial-gradient(ellipse at 75% 80%, rgba(232,162,39,0.05), transparent 50%);
+  pointer-events: none;
+}
+.pano-viewer-head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.pano-viewer-head h2 {
+  margin-top: 0.75rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+.pano-viewer-head p {
+  max-width: 58ch;
+  margin: 0.85rem auto 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+/* Tour Frame Container */
+.pano-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: #0d0f14;
+  border: 1px solid var(--line);
+  box-shadow: 0 35px 80px -20px rgba(0,0,0,0.45);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Panoramic Viewer Stage */
+.pano-stage-wrapper {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  background: #0a0c10;
+  overflow: hidden;
+}
+.pano-container #panoViewer {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 900px) {
+  .pano-stage-wrapper {
+    height: 440px;
+  }
+}
+@media (max-width: 600px) {
+  .pano-stage-wrapper {
+    height: 380px;
+  }
+}
+
+/* Top Glassmorphic Tour HUD */
+.pano-tour-hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+.pano-hud-left,
+.pano-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  flex-wrap: wrap;
+}
+
+.pano-badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  background: rgba(14, 18, 24, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.pano-badge-live .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulse-green 2s infinite ease-in-out;
+}
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.pano-room-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(14, 18, 24, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.pano-room-indicator .spec-dim {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--amber);
+  background: rgba(232, 162, 39, 0.15);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.pano-hud-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  background: rgba(14, 18, 24, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.pano-hud-tool-btn:hover {
+  background: rgba(38, 83, 199, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.pano-hud-tool-btn.is-active {
+  background: var(--blue);
+  border-color: #fff;
+}
+.pano-hud-tool-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Floor Plan Radar Mini-Map (Bottom-Left) */
+.pano-minimap-box {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 12;
+  background: rgba(12, 15, 21, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.pano-minimap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.pano-minimap-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+.pano-minimap-title svg {
+  width: 12px;
+  height: 12px;
+  color: var(--amber);
+}
+.pano-minimap-toggle-btn {
+  color: #94a3b8;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.2s;
+  display: none;
+}
+.pano-minimap-toggle-btn:hover {
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .pano-minimap-toggle-btn {
+    display: block;
+  }
+  .pano-minimap-box.is-collapsed .pano-minimap-body {
+    display: none;
+  }
+}
+
+.pano-minimap-body {
+  position: relative;
+  width: 170px;
+  height: 105px;
+}
+.pano-minimap-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.minimap-room-zone {
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.minimap-room-zone rect {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 1.2;
+  transition: all 0.25s ease;
+}
+.minimap-room-zone text {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  fill: #94a3b8;
+  transition: all 0.25s ease;
+}
+.minimap-room-zone:hover rect {
+  fill: rgba(38, 83, 199, 0.2);
+  stroke: var(--blue);
+}
+.minimap-room-zone:hover text {
+  fill: #ffffff;
+}
+.minimap-room-zone.is-active rect {
+  fill: rgba(38, 83, 199, 0.35);
+  stroke: #5c82ee;
+  stroke-width: 1.8;
+}
+.minimap-room-zone.is-active text {
+  fill: #ffffff;
+  font-weight: 700;
+}
+
+/* Radar sightline cone & player beacon */
+.minimap-radar-group {
+  pointer-events: none;
+  transition: transform 0.08s linear;
+}
+.minimap-radar-cone {
+  fill: url(#radarConeGradient);
+  opacity: 0.75;
+}
+.minimap-radar-dot {
+  fill: #5c82ee;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 4px #2653c7);
+}
+
+/* ============ CUSTOM PANNELLUM HOTSPOTS ============ */
+
+/* 1. Walkthrough Doorway Portal Hotspot */
+.pnlm-hotspot.pano-portal-hotspot {
+  cursor: pointer !important;
+  z-index: 25;
+}
+.pano-portal-pin {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 12px;
+  background: rgba(14, 18, 24, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(92, 130, 238, 0.7);
+  border-radius: 999px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(38, 83, 199, 0.4);
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
+}
+.pano-portal-pin:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: rgba(38, 83, 199, 0.95);
+  border-color: #ffffff;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(92, 130, 238, 0.8);
+}
+.pano-portal-beacon-ring {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  border-radius: 50%;
+  border: 1.5px solid #5c82ee;
+  animation: portal-pulse 2.2s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+@keyframes portal-pulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+.pano-portal-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2653c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(92, 130, 238, 0.6);
+}
+.pano-portal-icon svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s ease;
+}
+.pano-portal-pin:hover .pano-portal-icon svg {
+  transform: translateX(2px);
+}
+.pano-portal-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.pano-portal-text small {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+.pano-portal-text strong {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* 2. Architectural Beacon Hotspot */
+.pnlm-hotspot.pano-beacon-hotspot {
+  cursor: pointer !important;
+  z-index: 20;
+}
+.pano-beacon-btn {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pano-beacon-wave {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(232, 162, 39, 0.35);
+  border: 1px solid rgba(232, 162, 39, 0.8);
+  animation: beacon-ripple 2.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+@keyframes beacon-ripple {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.pano-beacon-core {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e8a227;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 14px rgba(232, 162, 39, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.pano-beacon-btn:hover .pano-beacon-core {
+  transform: scale(1.3);
+  background: #f59e0b;
+}
+
+/* Beacon Popover Glassmorphic Card */
+.pano-beacon-card {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 270px;
+  background: rgba(14, 18, 25, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: #fff;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 30;
+  text-align: left;
+}
+.pano-beacon-card::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px;
+  border-style: solid;
+  border-color: rgba(14, 18, 25, 0.92) transparent transparent transparent;
+}
+.pnlm-hotspot.pano-beacon-hotspot:hover .pano-beacon-card,
+.pnlm-hotspot.pano-beacon-hotspot:focus-within .pano-beacon-card {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.pano-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.pano-card-cat {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8a227;
+  background: rgba(232, 162, 39, 0.15);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.pano-card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: #94a3b8;
+}
+.pano-card-title {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 5px;
+  line-height: 1.35;
+}
+.pano-card-desc {
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+}
+.pano-card-spec {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: #93c5fd;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 6px;
+}
+
+/* Override Pannellum default controls */
+.pano-container .pnlm-controls-container {
+  display: none !important;
+}
+
+/* Bottom Navigation Bar & Room Selector */
+.pano-tour-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.pano-room-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pano-room-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--porcelain);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.pano-room-tab .tab-num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+.pano-room-tab .tab-sqft {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: rgba(0,0,0,0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+[data-theme="dark"] .pano-room-tab .tab-sqft {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.pano-room-tab:hover {
+  border-color: var(--blue);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.pano-room-tab.is-active {
+  background: var(--blue);
+  color: #ffffff;
+  border-color: var(--blue);
+  box-shadow: 0 4px 16px rgba(38, 83, 199, 0.3);
+}
+.pano-room-tab.is-active .tab-sqft {
+  background: rgba(255,255,255,0.22);
+  color: #ffffff;
+}
+
+.pano-tour-instructions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  flex-wrap: wrap;
+}
+.pano-instruction-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pano-instruction-item svg {
+  width: 14px;
+  height: 14px;
+  color: var(--blue);
+}
+
+.pano-viewer-hint {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.pano-viewer-hint svg {
+  width: 16px;
+  height: 16px;
+  animation: orbit-hint 3s ease-in-out infinite;
+}
+@keyframes orbit-hint {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(20deg); }
+}

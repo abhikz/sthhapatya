@@ -1,0 +1,12 @@
+/* ============================================================
+   12. FOOTER
+============================================================ */
+footer{padding:4.5rem 0 2.5rem;background:var(--ink);color:var(--porcelain);}
+[data-theme="dark"] footer{background:#0C0E12;color:var(--ink);}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.2rem;margin-bottom:2.2rem;border-bottom:1px solid rgba(247,244,238,.14);}
+.footer-brand .logo{margin-bottom:1rem;display:inline-flex;}
+.footer-brand p{color:rgba(247,244,238,.6);max-width:30ch;font-size:.92rem;}
+.footer-col h5{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,244,238,.55);margin-bottom:1rem;}
+.footer-col ul{display:flex;flex-direction:column;gap:.6rem;font-size:.92rem;}
+.footer-col a:hover{color:var(--amber);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:var(--font-mono);font-size:.75rem;color:rgba(247,244,238,.5);}

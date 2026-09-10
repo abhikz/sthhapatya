@@ -1,0 +1,328 @@
+/* ============================================================
+   ARCHITECTURAL PRECISION CURSOR & AMBIENT GLOW
+============================================================ */
+/* Ambient Trailing Glow */
+.cursor-ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9995;
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(circle, rgba(232, 162, 39, 0.22) 0%, rgba(38, 83, 199, 0.12) 42%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+[data-theme="dark"] .cursor-ambient-glow {
+  background: radial-gradient(circle, rgba(92, 130, 238, 0.3) 0%, rgba(232, 162, 39, 0.18) 45%, transparent 72%);
+  mix-blend-mode: screen;
+}
+
+/* Drafting Crosshair & Follower */
+.arch-cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate3d(-100px, -100px, 0);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* Precision Drafting Crosshairs */
+.arch-crosshair {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.arch-crosshair::before,
+.arch-crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+  opacity: 0.85;
+  transition: background 0.25s ease, opacity 0.25s ease;
+}
+.arch-crosshair::before {
+  top: 9px;
+  left: 0;
+  width: 20px;
+  height: 2px;
+}
+.arch-crosshair::after {
+  top: 0;
+  left: 9px;
+  width: 2px;
+  height: 20px;
+}
+
+/* Outer Spring Ring */
+.arch-cursor-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border: 1.5px dashed var(--ink);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.55;
+  transition: width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              height 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.25s ease,
+              border-style 0.25s ease,
+              background 0.25s ease,
+              opacity 0.25s ease;
+  pointer-events: none;
+}
+
+/* Architectural HUD Badge */
+.arch-cursor-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.85;
+  box-shadow: 0 4px 14px rgba(20, 23, 27, 0.12);
+  transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme="dark"] .arch-crosshair::before,
+[data-theme="dark"] .arch-crosshair::after {
+  background: #FFFFFF;
+}
+[data-theme="dark"] .arch-cursor-ring {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+[data-theme="dark"] .arch-cursor-badge {
+  background: #181C22;
+  color: #F7F4EE;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Interactive Hover State */
+.arch-cursor-follower.is-hovering .arch-crosshair::before,
+.arch-cursor-follower.is-hovering .arch-crosshair::after {
+  background: var(--blue);
+  opacity: 1;
+}
+.arch-cursor-follower.is-hovering .arch-cursor-ring {
+  width: 52px;
+  height: 52px;
+  border-style: solid;
+  border-color: var(--blue);
+  background: rgba(38, 83, 199, 0.08);
+  opacity: 1;
+}
+.arch-cursor-follower.is-hovering .arch-cursor-badge {
+  opacity: 1;
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+/* ============================================================
+   SMART SECTION INDICATOR (MINI-MAP & "YOU ARE HERE" HUD)
+============================================================ */
+.smart-nav-rail {
+  position: fixed;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.smart-nav-rail.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+.smart-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 3px;
+  outline: none;
+}
+.smart-nav-label {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 20px rgba(20, 23, 27, 0.12);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+[data-theme="dark"] .smart-nav-label {
+  background: #181C22;
+  color: #F7F4EE;
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+.smart-nav-item:hover .smart-nav-label,
+.smart-nav-item:focus-visible .smart-nav-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+.smart-nav-pip {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  opacity: 0.35;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.smart-nav-num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-soft);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
+}
+.smart-nav-item:hover .smart-nav-num {
+  opacity: 0.8;
+  transform: translateX(0);
+}
+.smart-nav-item:hover .smart-nav-pip {
+  opacity: 0.85;
+  transform: scale(1.3);
+  background: var(--ink);
+}
+
+/* "You Are Here" Active Indicator State */
+.smart-nav-item.is-active .smart-nav-pip {
+  opacity: 1;
+  background: var(--blue);
+  transform: scale(1.5);
+  box-shadow: 0 0 0 4px rgba(38, 83, 199, 0.22);
+}
+.smart-nav-item.is-active .smart-nav-num {
+  opacity: 1;
+  color: var(--blue);
+  font-weight: 700;
+  transform: translateX(0);
+}
+
+/* Header link "You are here" active highlight */
+.nav-links a.is-active {
+  color: var(--blue) !important;
+  font-weight: 700;
+  position: relative;
+}
+.nav-links a.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+/* Keyboard Navigation HUD Helper */
+.kbd-nav-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(247, 244, 238, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+[data-theme="dark"] .kbd-nav-hint {
+  background: rgba(20, 23, 27, 0.88);
+  color: rgba(247, 244, 238, 0.75);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.kbd-nav-hint.is-visible {
+  opacity: 0.95;
+  transform: translateY(0);
+}
+.kbd-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.65rem;
+}
+[data-theme="dark"] .kbd-key {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 900px) {
+  .smart-nav-rail,
+  .kbd-nav-hint {
+    display: none !important;
+  }
+}

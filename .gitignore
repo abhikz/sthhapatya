@@ -1,0 +1,12 @@
+# Large local media files exceeding GitHub's 100MB push limit
+video/hero-slide/houseIntro.mp4
+
+# Backup HTML & CSS/JS files
+*Backup*
+*backup*
+*Basck*
+*.bak
+
+# Temporary / OS files
+.DS_Store
+Thumbs.db
