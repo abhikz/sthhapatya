@@ -52,6 +52,13 @@
   border: none;
   z-index: 0;
 }
+.hero-slide-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+  cursor: default;
+}
 .hero::before{
   content:"";position:absolute;inset:0;z-index:2;
   background:linear-gradient(180deg, rgba(20,23,27,.25) 0%, rgba(20,23,27,.25) 45%, rgba(20,23,27,.84) 100%);
